@@ -3,67 +3,76 @@ const mongoose = require("mongoose");
 const productSchema = mongoose.Schema({
   name: {
     type: String,
-    require: [true, " Please Enter Product Name"],
+    required: [true, "Please Enter Product Name"],
     trim: true,
   },
-  description: {
+
+  discription: {
     type: String,
-    require: [true, "Please Enter Product Discription"],
+    required: [true, "Please Enter Product Discription"],
   },
+
   price: {
-    type: String,
-    require: [true, " Please Enter Product Price"],
-    maxLenght: [8, [" Price can not exceed 8 character"]],
+    type: Number,
+    required: [true, "Please Enter Product Price"],
+    maxLength: [8, "Price Cannot Exceed 8 Characters"],
   },
+
   rating: {
     type: Number,
     default: 0,
   },
+
   images: [
     {
       public_id: {
         type: String,
-        require: true,
+        required: true,
       },
       url: {
         type: String,
-        require: true,
+        required: true,
       },
     },
   ],
+
   category: {
     type: String,
-    require: [true, " Please Enter Product Category"],
+    required: [true, "Please Enter Product Category"],
   },
-  Stock: {
-    type: Number,
-    require: [true, "Please Enter Product Stock"],
-    maxLenght: [5, "Stock cabnot excced 5 Character"],
+
+  stock: {
+    type: String,
+    required: [true, "Please Enter Product Stock "],
+    maxLength: [4, "Stock Cannot Exceed 4 Charactoers"],
     default: 1,
   },
-  numberOfReview: {
+
+  numOfReviews: {
     type: Number,
     default: 0,
   },
-  rewiews: [
+
+  reviews: [
     {
       name: {
         type: String,
-        require: true,
+        required: true,
       },
       rating: {
-        type: Number,
-        require: true,
+        type: String,
+        required: true,
       },
       comment: {
         type: String,
-        require: true,
+        required: true,
       },
     },
   ],
+
   createdAt: {
     type: Date,
-    default: Date.Now,
+    default: Date.now,
   },
 });
 

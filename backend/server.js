@@ -2,11 +2,28 @@ const app = require("./app");
 const dotenv = require("dotenv");
 const connectDatabase = require("./config/database");
 
-// Config
+//Handling Uncaught Exeptions
+process.on("uncaughtException", (err) => {
+  console.log(`Error:${err.message}`);
+  console.log("Shutting Down To Server Due To Uncaught Exeptions");
+  process.exit(1);
+});
+
+//config
 dotenv.config({ path: "backend/config/config.env" });
 
-// Connecting to database
+//connect database
 connectDatabase();
-app.listen(process.env.PORT, () => {
-  console.log(`Server Is Working on  http://localhost: ${process.env.PORT}`);
+const server = app.listen(process.env.PORT, () => {
+  console.log(`server is working on http://localhost:${process.env.PORT}`);
+});
+
+//Unhandled Promice Rejection
+process.on("unhandledRejection", (err) => {
+  console.log(`Error:${err.message}`);
+  console.log("Shutting Down To Server Due To Unhandeld Promiss Rejection");
+
+  server.close(() => {
+    process.exit(1);
+  });
 });

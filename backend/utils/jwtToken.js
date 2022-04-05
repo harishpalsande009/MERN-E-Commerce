@@ -1,15 +1,17 @@
-// Creating Token And Saving in cookie
+//creating token and saving in cookie
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getJWTToken();
-  // Option For Cookie
-  const option = {
-    expires: new Date(
+
+  //Option For Cookie
+  const options = {
+    expiers: new Date(
       Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
   };
-  res.status(statusCode).cookie(" token ", token, option).json({
+
+  res.status(statusCode).cookie("token", token, options).json({
     success: true,
     user,
     token,

@@ -1,12 +1,18 @@
 const nodeMailer = require("nodemailer");
+const SMTPPool = require("nodemailer/lib/smtp-pool");
+
 const sendEmail = async (options) => {
-  const transporter = nodeMailer.createTransport({
-    service: process.env.SMPT_SERVICES,
-    auth: {
-      user: process.env.SMPT_MAIL,
-      pass: process.env.SMPT_PASSWORD,
-    },
-  });
+  const transporter = nodeMailer.createTransport(
+    new SMTPPool({
+      host: process.env.SMPT_HOST,
+      port: process.env.SMPT_PORT,
+      service: process.env.SMPT_SERVICE,
+      auth: {
+        user: process.env.SMPT_MAIL,
+        pass: process.env.SMPT_PASSWORD,
+      },
+    })
+  );
 
   const mailOptions = {
     from: process.env.SMPT_MAIL,
